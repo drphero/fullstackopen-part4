@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/drphero/fullstackopen-part4#readme",
   "devDependencies": {
+    "jest": "^25.3.0",
     "nodemon": "^2.0.3"
   },
   "dependencies": {
@@ -26,5 +27,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.7"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
