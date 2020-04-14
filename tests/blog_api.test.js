@@ -41,6 +41,14 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(initialBlogs.length);
 });
 
+test.only('that unique identifier is named id', async () => {
+  const blogs = await Blog.find({});
+  const blogToTest = blogs[0].toJSON();
+  console.log(blogToTest);
+  expect(blogToTest.id).toBeDefined();
+  expect(blogToTest._id).not.toBeDefined();
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
