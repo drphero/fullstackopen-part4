@@ -29,12 +29,11 @@ test('all blogs are returned', async () => {
 test('that unique identifier is named id', async () => {
   const blogs = await Blog.find({});
   const blogToTest = blogs[0].toJSON();
-  console.log(blogToTest);
   expect(blogToTest.id).toBeDefined();
   expect(blogToTest._id).not.toBeDefined();
 });
 
-test.only('a valid blog can be added', async () => {
+test('a valid blog can be added', async () => {
   const newBlog = {
     title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
@@ -52,6 +51,22 @@ test.only('a valid blog can be added', async () => {
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1);
   const titles = blogsAtEnd.map((blog) => blog.title);
   expect(titles).toContain('Canonical string reduction');
+});
+
+test('if likes property is missing from request default is 0', async () => {
+  const newBlog = {
+    title: 'First class tests',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html',
+  };
+
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  expect(response.body.likes).toBe(0);
 });
 
 afterAll(() => {
