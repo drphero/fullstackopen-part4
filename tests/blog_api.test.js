@@ -69,6 +69,17 @@ test('if likes property is missing from request default is 0', async () => {
   expect(response.body.likes).toBe(0);
 });
 
+test.only('if title and url properties are missing from request status is 400', async () => {
+  const newBlog = {
+    author: 'Brent',
+  };
+
+  await api.post('/api/blogs').send(newBlog).expect(400);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
